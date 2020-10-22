@@ -1,5 +1,5 @@
 
-interface Response {
+interface ViaCEPResponse {
     cep: string;
     logradouro: string;
     bairro: string;
@@ -13,13 +13,26 @@ interface Response {
 
 
 
-export async function _request(cep: string): Promise<any> {
-    // let result = new Response();
-
+export async function request(cep: string): Promise<any> {
     try {
-        const result = await fetch('https://viacep.com.br/ws/'+ '04455310' + '/json');
-        console.log(result)                
+        const result = await (await fetch('https://viacep.com.br/ws/'+cep+'/json')).json();
+        let res = _formatter(result);
+        return res;
     } catch (error) {
         console.log(error.message);
     }
+}
+
+function _formatter(response: any): ViaCEPResponse {
+    return {
+        cep: response.cep,
+        logradouro: response.logradouro,
+        bairro: response.bairro,
+        localidade: response.localidade,
+        uf: response.uf,
+        ibge: response.ibge,
+        gia: response.gia,
+        ddd: response.ddd,
+        siafi: response.siafi
+    };
 }
