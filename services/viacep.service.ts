@@ -1,17 +1,4 @@
-
-interface ViaCEPResponse {
-    cep: string;
-    logradouro: string;
-    bairro: string;
-    localidade: string;
-    uf: string;
-    ibge: string;
-    gia: string;
-    ddd: string;
-    siafi: string;
-}
-
-
+import {ViaCEPResponse} from '../interfaces/viaCEP.ts';
 
 export async function request(cep: string): Promise<any> {
     try {
